@@ -81,8 +81,8 @@ int MediaDecoder::play() {
     timer = new Timer();
     timer->start();
     while (true) {
-        int ret = av_read_frame(format_context, packet);
-        if (ret < 0) {
+        int ret_frame = av_read_frame(format_context, packet);
+        if (ret_frame < 0) {
             printf("Cannot read video frame.");
             break;
         }
