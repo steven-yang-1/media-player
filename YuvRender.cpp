@@ -13,7 +13,7 @@ YuvRender::YuvRender(int video_width, int video_height) {
         video_height = int(video_height / maxRatio);
     }
     window = SDL_CreateWindow(
-            "NetCameraViewer",
+            "Media Player",
             SDL_WINDOWPOS_UNDEFINED,
             SDL_WINDOWPOS_UNDEFINED,
             video_width,
@@ -61,7 +61,6 @@ int YuvRender::render(AVFrame* frame) {
         printf("SDL_RenderCopy fail.");
     }
     SDL_RenderPresent(renderer);
-
     return 0;
 }
 

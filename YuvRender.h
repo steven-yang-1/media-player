@@ -2,6 +2,7 @@
 #define MEDIASERVER_YUVRENDER_H
 
 #include "SDL2/SDL.h"
+
 extern "C" {
     #include <libavcodec/avcodec.h>
     #include <libavformat/avformat.h>
@@ -13,8 +14,8 @@ public:
     YuvRender(int video_width, int video_height);
     int render(AVFrame* frame);
     ~YuvRender();
-private:
     SDL_Window* window;
+private:
     SDL_Renderer* renderer;
     SDL_Texture* texture;
     SDL_Rect rect;

@@ -20,7 +20,7 @@ int SDL_main(int argc, char* argv[]) {
     }
     int port = config_root.get<int>("port");
 
-    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER);
 
     auto* yuv_render = new YuvRender(854, 480);
 
