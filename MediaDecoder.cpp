@@ -78,7 +78,10 @@ int MediaDecoder::play() {
     if (video_stream_index == -1) {
         printf("Cannot open the video stream.");
     }
+    uint32_t start = SDL_GetTicks();
     while (av_read_frame(format_context, packet)>= 0) {
+        AVStream *stream = format_context->streams[packet->stream_index];
+        double timebase = av_q2d(stream->time_base);
         if (packet->stream_index == audio_stream_index) {
             int ret = avcodec_send_packet(audio_codec_context, packet);
             if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
@@ -91,7 +94,6 @@ int MediaDecoder::play() {
             }
             while (avcodec_receive_frame(audio_codec_context, av_frame) == 0) {
                 audio->render(av_frame);
-                SDL_Delay(0.1);
             }
             av_frame_unref(av_frame);
         } else if (packet->stream_index == video_stream_index) {
@@ -101,8 +103,13 @@ int MediaDecoder::play() {
                 break;
             }
             while (avcodec_receive_frame(video_codec_context, av_frame) == 0) {
+                uint32_t video_time = (double)(av_frame->best_effort_timestamp) * timebase * 1000;
+                while (true){
+                    uint32_t elapsed = SDL_GetTicks() - start;
+                    if (elapsed >= video_time) break;
+                }
                 yuv_render->render(av_frame);
-                SDL_Delay(int(((double)(video_codec_context->framerate.den * 1.0 / video_codec_context->framerate.num)) * 1000));
+                //SDL_Delay(int(((double)(video_codec_context->framerate.den * 1.0 / video_codec_context->framerate.num)) * 1000));
                 //SDL_Delay(int(video_codec_context->framerate.num * 1.0 / video_codec_context->framerate.den));
             }
         }

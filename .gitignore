@@ -1,7 +1,6 @@
-./cmake-build-debug
-./cmake-build-debug
-./boost
-./ffmpeg
-./SDL2
-./ffmpeg
-./bin
+/bin/
+/boost/
+/cmake-build-debug/
+/cmake-build-release/
+/ffmpeg/
+/SDL2/

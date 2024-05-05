@@ -7,7 +7,7 @@ Audio::Audio(AVCodecContext* audio_codec_context) {
     SDL_zero(wanted_spec);
     SDL_zero(have_spec);
 
-    wanted_spec.freq = audio_codec_context->sample_rate;
+    wanted_spec.freq = 44100;
     wanted_spec.format = AUDIO_S16SYS;
     wanted_spec.channels = audio_codec_context->channels;
     wanted_spec.silence = 0;
